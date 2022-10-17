@@ -26,6 +26,7 @@ class PriorityQueue:
         self._data_set.add(item)
         heapq.heappush(self._data_heap, (p, item))
 
+
     def pop(self):
         p, item = heapq.heappop(self._data_heap)
         self._data_set.remove(item)

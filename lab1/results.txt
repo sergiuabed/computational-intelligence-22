@@ -1,0 +1,8 @@
+INFO:root:search solution for N=5: w=5 (bloat=0%)
+INFO:root:Visited nodes = 3
+INFO:root:search solution for N=10: w=10 (bloat=0%)
+INFO:root:Visited nodes = 3
+INFO:root:search solution for N=20: w=23 (bloat=15%)
+INFO:root:Visited nodes = 449
+INFO:root:search solution for N=50: w=66 (bloat=32%)
+INFO:root:Visited nodes = 61898
