@@ -10,18 +10,14 @@ def problem(N, seed=None):
     ]
 if __name__ == '__main__':
     seed = 42
-    N = 10
+    N = 20
 
     l = problem(N, seed)
-    initialState = State({})
+    initialState = State([[]])
 
     state_cost = dict()
     parent_state = dict()
-    goal_test = lambda s: s == State(set(range(0, N)))
-
-    print(len(l))
-    print()
-    print()
+    goal_test = lambda s: s == State([list(range(0, N))])
 
     #path = search(initialState, set(range(0, 5)), dict(), dict(), lambda x : len(state_cost))
     path, cost = search(initialState, goal_test = goal_test, parent_state = parent_state, state_cost = state_cost, priority_function = lambda s : len(state_cost), unit_cost=lambda s : len(s), lists=l)

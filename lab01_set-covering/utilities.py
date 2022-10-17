@@ -1,11 +1,15 @@
+import copy
 from typing import Callable
 from gx_utils import *
 import logging
 
 class State:
-    def __init__(self, data: set):
-        self._data = set(data)
-        #self._data = data.copy()
+    def __init__(self, l: list):
+        self._lists = l
+        self._data = set()
+
+        for lst in self._lists:
+            self._data.update(lst)
 
     def __hash__(self):
         return hash(bytes(self._data))
@@ -29,6 +33,9 @@ class State:
     def copy_data(self):
         return set(self._data)
 
+    def lists(self):
+        return self._lists
+
 
 logging.basicConfig(format="%(message)s", level=logging.INFO)
 
@@ -51,7 +58,9 @@ def search(
 
     while state is not None and not goal_test(state):
         for a in lists:
-            new_state = State(state.data.union(a))
+            nl = copy.deepcopy(state.lists())
+            nl.append(a)
+            new_state = State(nl)
             cost = unit_cost(a)
             if new_state not in state_cost and new_state not in frontier:
                 parent_state[new_state] = state
@@ -75,4 +84,5 @@ def search(
         s = parent_state[s]
 
     logging.info(f"Found a solution in {len(path):,} steps; visited {len(state_cost):,} states")
-    return list(reversed(path)), state_cost[state]
+    #return list(reversed(path)), state_cost[state]
+    return state.lists(), state_cost[state]
