@@ -102,7 +102,7 @@ def recombination(ind1: Individual, ind2: Individual):
 
     return Individual(new_genome)
 
-def tournament(population, tournament_size=2):
+def tournament(population, tournament_size=20):
     return max(random.choices(population=population, k=tournament_size), key=lambda i: i.fitness)
 
 def evolution(population):
@@ -131,7 +131,8 @@ if __name__ == '__main__':
     population = initialize_population(alleles)
     
     solution = evolution(population)
-    print("weight")
-    print(solution.weight)
+    print(f"n: {n}")
+    print(f"weight: {solution.weight}")
+    
     print(solution.representation)
 
