@@ -1,4 +1,4 @@
-# Lab 2: Set Covering via Genetic Algorithm
+# Lab 3: Policy Search
 
 ## Info for the Reader
 
