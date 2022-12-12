@@ -104,6 +104,10 @@ Running the code multiple times, the following solutions were found:
 - Genome(pure_random_p=0.11361286340732811, greedy_p=0.6506918540601518, even_odd_p=0.18591195830290055, shy_pick=0.04978332422961946)
   - win rate: 0.81
 
+## Task 3.3: An agent using minma
+
+Just a classical implementation of the minmax decision rule. A game tree is generated enumerating each possible move in every ply, with a depth limited by a look ahead option. A heuristic function evaluates a node based on whether its nim-sum is zero or not, or whether it represents a positive or negative critical situation (where the nim-sum strategy fails to determine the best action). The minmax strategy wins against a random one competes against a nim-sum opponent, but only for a look-ahead of 1 ply. This is probably due to the horizon effect.
+
 ## Sources
 
 - Giovanni Squillero's Github Computational Intelligence
