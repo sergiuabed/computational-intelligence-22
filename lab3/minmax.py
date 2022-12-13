@@ -172,11 +172,56 @@ def check_critical_situations(heaps: list) -> int:
         return -1
     return 0
 
+def critical_situations(player: Player, heaps: Nim) -> bool:
+
+    code = check_critical_situations(heaps.rows)
+
+    if code != 0:
+        if code == 1:  # [1, a, 1, 1, 0, 0], a > 1
+            # take all objects from the heap with more than 1 object
+            heaps.nimming(heaps.rows.index(max(heaps.rows)),
+                          max(heaps.rows), player)
+        elif code == 2:  # [1, a, 1, 0, 0], a > 1
+            # take all objects but 1 from the heap with more than 1 object
+            heaps.nimming(heaps.rows.index(max(heaps.rows)),
+                          max(heaps.rows)-1, player)
+        elif code == 3:  # [a, 0, 0], a > 1
+            # take all objects but 1 from the last non zero heap with more than 1 object
+            heaps.nimming(heaps.rows.index(max(heaps.rows)),
+                          max(heaps.rows)-1, player)
+        # [1, 1, 0, ..., 0] or [1, 1, 1, 0, ..., 0]
+        elif code == 4 or code == -1:
+            # take from the first non zero heap
+            heaps.nimming(heaps.rows.index(1), 1, player)
+        elif code == 5:
+            pass
+        return True
+    else:
+        return False
+
+
 def nim_sum(l: list):
     sum = 0
     for _, v in enumerate(l):
         sum ^= v
     return sum
+
+def nim_sum_strategy(player: Player, heaps: Nim):
+    if sum(heaps.rows) == 0:
+        raise Exception("There is no heap left!")
+
+    if not critical_situations(player, heaps):
+        # normal game
+        x = nim_sum(heaps.rows)
+        y = [nim_sum([x, h]) for _, h in enumerate(heaps.rows)]
+        winning_heaps = [i for i, h in enumerate(heaps.rows) if y[i] < h]
+        if len(winning_heaps) > 0:  # if there's a winning heap
+            chosen_heap_idx = random.choice(winning_heaps)
+            quantity = heaps.rows[chosen_heap_idx]-y[chosen_heap_idx]
+            heaps.nimming(chosen_heap_idx, quantity, player)
+        else:  # take from a random heap
+            random_strategy(player, heaps)
+
 
 def heuristic(node: GameNode, hash_table: dict):
     # check if the value of the state has been already computed
